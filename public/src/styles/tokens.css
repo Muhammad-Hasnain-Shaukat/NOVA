@@ -1,0 +1,139 @@
+/* ==========================================================================
+   NOVA — DUAL THEME TOKENS
+   Light Theme: Luxurious Bluish-Green (Arctic Teal & Mint Jade)
+   Dark Theme: Menacing Midnight Streetwear (Obsidian Black & Liquid Chrome)
+   ========================================================================== */
+
+:root,
+[data-theme="light"] {
+  --theme-name: 'light';
+
+  /* Bluish-Green / Arctic Teal & Mint Palette */
+  --amber-050: #e0f7f9;
+  --amber-100: #7fffd4;   /* Aquamarine / Mint */
+  --amber-200: #2dd4bf;   /* Teal Highlight */
+  --amber-300: #14b8a6;   /* Rich Teal */
+  --amber-400: #0f4c52;   /* Deep Bluish-Green Base */
+  --amber-500: #08282c;   /* Abyssal Teal */
+
+  /* Button & Accent Palette */
+  --plum:      #0d9488;   /* Mint Teal Button */
+  --plum-hi:   #20f5c8;   /* Electric Mint Hover */
+  --plum-ink:  #042f2e;   /* Dark Jade Badge */
+  --accent:    #20f5c8;   /* Luminous Mint */
+
+  /* Text & Surface Tokens */
+  --paper:       #f0fdff;   /* Crisp Ice White */
+  --paper-dim:   rgba(240, 253, 255, 0.82);
+  --paper-faint: rgba(240, 253, 255, 0.62);
+  --ink:         #042f2e;   /* Deep Jade for solid card */
+
+  /* Glassmorphism Tokens */
+  --glass:        rgba(15, 76, 82, 0.35);
+  --glass-strong: rgba(240, 253, 255, 0.94);
+  --glass-line:   rgba(127, 255, 212, 0.38);
+
+  /* Backdrop Floor */
+  --floor-gradient: radial-gradient(118% 88% at 50% 8%, #14b8a6 0%, #0f4c52 35%,
+    #0a3539 65%, #08282c 100%), #0f4c52;
+
+  /* Glow Orbs */
+  --glow-warm: radial-gradient(circle, rgba(32, 245, 200, 0.45), transparent 68%);
+  --glow-rose: radial-gradient(circle, rgba(45, 212, 191, 0.38), transparent 66%);
+  --glow-halo: radial-gradient(circle, rgba(127, 255, 212, 0.45), transparent 62%);
+
+  /* Wordmark Fill */
+  --wordmark-gradient: linear-gradient(104deg, #ffffff 0%, #d5fbf6 34%,
+    #7fffd4 68%, #20f5c8 100%);
+  
+  --plate-filter: brightness(0.9) saturate(1.2) hue-rotate(145deg);
+}
+
+/* ==========================================================================
+   DARK THEME: "Blackish Midnight Streetwear Cyber Movement"
+   ========================================================================== */
+[data-theme="dark"] {
+  --theme-name: 'dark';
+
+  /* Deep Blackish Obsidian & Carbon Palette */
+  --amber-050: #ffffff;
+  --amber-100: #1a1a1a;
+  --amber-200: #121212;
+  --amber-300: #0a0a0a;
+  --amber-400: #040404;   /* Deepest Blackish Base */
+  --amber-500: #000000;
+
+  /* Streetwear Accents */
+  --plum:      #00F0FF;   /* Cyber Cyan Button */
+  --plum-hi:   #39FF14;   /* Acid Green Hover */
+  --plum-ink:  #111111;   /* Matte Carbon Badge */
+  --accent:    #00F0FF;   /* Electric Cyan */
+
+  /* Text & Surface Tokens */
+  --paper:       #ffffff;   /* Pure White */
+  --paper-dim:   rgba(255, 255, 255, 0.8);
+  --paper-faint: rgba(255, 255, 255, 0.55);
+  --ink:         #040404;   /* Pure Black */
+
+  /* Glassmorphism Tokens */
+  --glass:        rgba(15, 15, 15, 0.78);
+  --glass-strong: rgba(255, 255, 255, 0.94);
+  --glass-line:   rgba(255, 255, 255, 0.22);
+
+  /* Backdrop Floor */
+  --floor-gradient: radial-gradient(118% 88% at 50% 8%, #161616 0%, #0d0d0d 35%,
+    #080808 65%, #020202 100%), #040404;
+
+  /* Glow Orbs */
+  --glow-warm: radial-gradient(circle, rgba(0, 240, 255, 0.28), transparent 68%);
+  --glow-rose: radial-gradient(circle, rgba(57, 255, 20, 0.2), transparent 66%);
+  --glow-halo: radial-gradient(circle, rgba(147, 51, 234, 0.25), transparent 62%);
+
+  /* Wordmark Fill */
+  --wordmark-gradient: linear-gradient(104deg, #ffffff 0%, #e2e8f0 34%,
+    #00f0ff 72%, #39ff14 100%);
+
+  --plate-filter: brightness(0.45) contrast(1.35) grayscale(0.8);
+}
+
+:root {
+  /* Radii & Layout Shell */
+  --radius-card: 20px;
+  --radius-pill: 999px;
+  --shell-x: clamp(1.15rem, 3.1vw, 3.4rem);
+  --shell-y: clamp(1.1rem, 2.1vw, 2.1rem);
+
+  /* Easing Vocabulary */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Typography Stack */
+  --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-tech:    'Space Grotesk', 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--amber-400);
+  color: var(--paper);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100svh;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.5s ease;
+}
