@@ -37,32 +37,32 @@
     }
 
     /* ==========================================================================
-       PURE AMBIENT GLOW MOUSE TRACKER (SUBTLE WARM GOLDEN AURA)
+       PURE AMBIENT GLOW MOUSE TRACKER (COMPACT GOLDEN SPOTLIGHT)
        ========================================================================== */
     .ambient-mouse-glow {
       position: fixed;
       top: 0;
       left: 0;
-      width: 360px;
-      height: 360px;
-      margin-top: -180px;
-      margin-left: -180px;
+      width: 190px;
+      height: 190px;
+      margin-top: -95px;
+      margin-left: -95px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(254, 240, 138, 0.42) 0%, rgba(251, 191, 36, 0.22) 35%, rgba(217, 119, 6, 0.08) 60%, transparent 75%);
-      filter: blur(30px);
+      background: radial-gradient(circle, rgba(254, 240, 138, 0.45) 0%, rgba(251, 191, 36, 0.2) 40%, transparent 70%);
+      filter: blur(18px);
       pointer-events: none;
       z-index: 1;
       mix-blend-mode: screen;
       will-change: transform;
-      transform: translate3d(-200px, -200px, 0);
+      transform: translate3d(-100px, -100px, 0);
       transition: opacity 0.3s ease;
-      opacity: 0.88;
+      opacity: 0.85;
     }
 
     html[data-theme="dark"] .ambient-mouse-glow {
-      background: radial-gradient(circle, rgba(254, 240, 138, 0.48) 0%, rgba(245, 158, 11, 0.28) 38%, rgba(180, 83, 9, 0.1) 65%, transparent 78%);
-      filter: blur(32px);
-      opacity: 0.9;
+      background: radial-gradient(circle, rgba(254, 240, 138, 0.5) 0%, rgba(245, 158, 11, 0.25) 42%, transparent 72%);
+      filter: blur(20px);
+      opacity: 0.88;
     }
 
     /* Z0 — BACKDROP */
