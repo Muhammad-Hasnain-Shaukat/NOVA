@@ -14,6 +14,10 @@
 
   <link rel="stylesheet" href="src/styles/shared.css" />
 
+  <!-- High-Priority Image Preloading for Instant Hero Rendering -->
+  <link rel="preload" as="image" href="src/assets/characters_unmasked.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="src/assets/characters_masked.png" fetchpriority="high" />
+
   <style>
     /* REMOVE ALL DEFAULT POINTERS */
     *, *::before, *::after, html, body, .hero, a, button, input, select {
