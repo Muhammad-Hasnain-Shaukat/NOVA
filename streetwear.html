@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Streetwear — NOVA Cyber Runway & Drops</title>
+  <meta name="description" content="Discover NOVA Streetwear: Cyberpunk silhouettes, tactical cargo armor, and underground Tokyo runway lookbooks." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="src/styles/shared.css" />
+
+  <style>
+    .street-hero {
+      padding: clamp(3rem, 7vh, 5.5rem) 0 3rem;
+      text-align: center;
+    }
+
+    .street-hero__badge {
+      display: inline-block;
+      font-family: var(--font-tech);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan-neon);
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--glass-line);
+      padding: 0.35rem 0.95rem;
+      border-radius: var(--radius-pill);
+      background: var(--glass);
+    }
+
+    .street-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6.5vw, 5rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 1.2rem;
+    }
+
+    .street-hero__text {
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      color: var(--paper-dim);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* EDITORIAL LOOKBOOK GRID */
+    .lookbook-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 6rem;
+    }
+
+    .look-card {
+      position: relative;
+      height: 540px;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      border: 1px solid var(--glass-line);
+      transition: transform 0.4s var(--ease-out-expo), border-color 0.3s ease;
+      background: #061e2c;
+    }
+
+    .look-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+    }
+
+    .look-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s var(--ease-out-expo);
+    }
+
+    .look-card:hover .look-card__img {
+      transform: scale(1.06);
+    }
+
+    .look-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.88) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+    }
+
+    .look-card__title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 0.4rem;
+    }
+
+    .look-card__tag {
+      font-family: var(--font-tech);
+      font-size: 0.78rem;
+      color: var(--cyan-neon);
+      margin-bottom: 1rem;
+    }
+
+    /* MANIFESTO BANNER */
+    .manifesto-banner {
+      background: var(--glass-card);
+      border: 1px solid var(--accent);
+      border-radius: 28px;
+      padding: clamp(3rem, 6vw, 5rem);
+      margin-bottom: 6rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .manifesto-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+      max-width: 900px;
+      margin: 0 auto 1.5rem;
+    }
+
+    @media (max-width: 960px) {
+      .lookbook-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .look-card {
+        height: auto !important;
+        aspect-ratio: 4 / 5 !important;
+        width: 100%;
+      }
+      .look-card__img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center top !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-nav">
+      <!-- 1. LEFT BRAND -->
+      <a href="index.html" class="site-brand">
+        <svg class="site-brand__monogram-svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14.25" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M11 22V10H13.8L18.2 17.5V10H21V22H18.2L13.8 14.5V22H11Z" fill="currentColor"/>
+        </svg>
+        <span>NOVA</span>
+      </a>
+
+      <!-- 2. CENTER NAV MENU -->
+      <nav class="nav-center-menu" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="studio.html" class="nav-link">Studio</a></li>
+          <li><a href="collection.html" class="nav-link">Collection</a></li>
+          <li><a href="atelier.html" class="nav-link">Atelier</a></li>
+          <li><a href="streetwear.html" class="nav-link active">Streetwear</a></li>
+          <li><a href="archives.html" class="nav-link">Archives</a></li>
+        </ul>
+      </nav>
+
+      <!-- 3. RIGHT ACTIONS -->
+      <div class="nav-actions">
+        <!-- THEME SWITCHER -->
+        <button class="theme-switch-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <div class="theme-switch-pill"></div>
+          <div class="theme-option light-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="4.5"></circle><line x1="12" y1="1.5" x2="12" y2="3.5"></line><line x1="12" y1="20.5" x2="12" y2="22.5"></line><line x1="4.5" y1="4.5" x2="6" y2="6"></line><line x1="18" y1="18" x2="19.5" y2="19.5"></line><line x1="1.5" y1="12" x2="3.5" y2="12"></line><line x1="20.5" y1="12" x2="22.5" y2="12"></line><line x1="4.5" y1="19.5" x2="6" y2="18"></line><line x1="18" y1="6" x2="19.5" y2="4.5"></line></svg>
+          </div>
+          <div class="theme-option dark-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </div>
+        </button>
+
+        <!-- CART BUTTON -->
+        <button class="cart-trigger-btn" onclick="openCartDrawer()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Bag</span>
+          <span class="cart-badge">0</span>
+        </button>
+
+        <!-- CONNECT BUTTON -->
+        <a href="atelier.html" class="btn-primary" style="padding: 0.65rem 1.4rem; font-size: 0.8rem;">
+          <span>Connect</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN STREETWEAR CONTENT -->
+  <main class="container">
+    <section class="category-hero">
+      <div class="category-label">TOKYO RUNWAY DROP // 2026</div>
+      <h1 class="category-title">Technical Streetwear</h1>
+      <p class="category-subtitle">
+        Underground cyber silhouettes, articulated tactical cargos, and modular weather armor built for the nocturnal metropolis.
+      </p>
+
+      <!-- CENTERED METADATA BAR -->
+      <div class="category-meta-bar">
+        <div class="meta-item">
+          <span class="meta-item__label">Drop Code</span>
+          <span class="meta-item__value">Season 04 / Tokyo Night</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Silhouettes</span>
+          <span class="meta-item__value">Oversized Modular Shells</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Weather Armor</span>
+          <span class="meta-item__value">Hydrophobic Gore-Tex 3L</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Status</span>
+          <span class="meta-item__value">Live Dispatch Global</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOOKBOOK 8-CARD EDITORIAL GRID -->
+    <div class="lookbook-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 5rem;">
+      <!-- LOOK 01 -->
+      <div class="look-card" style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+        <img src="src/assets/streetwear/streetwear (1).jpg" alt="Look 01 — Tokyo Underground Oversized Tee" class="look-card__img" style="width: 100%; height: 100%; object-fit: cover;" />
+        <div class="look-card__overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+          <div class="look-card__tag" style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">LOOK 01 / TOKYO UNDERGROUND</div>
+          <h3 class="look-card__title" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0.3rem 0 0.8rem;">Cyber-Graphic Heavy Tee</h3>
+          <div style="display: flex; gap: 0.8rem;">
+            <a href="product-detail.html?id=nova-str-01" class="btn-primary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;">Shop Look</a>
+            <button class="btn-secondary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;" onclick="addToBag('nova-str-01', 'M', 1)">Quick Bag</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 02 -->
+      <div class="look-card" style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+        <img src="src/assets/streetwear/streetwear (2).jpg" alt="Look 02 — Cyberpunk Layered Hoodie" class="look-card__img" style="width: 100%; height: 100%; object-fit: cover;" />
+        <div class="look-card__overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+          <div class="look-card__tag" style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">LOOK 02 / STORM PROTOCOL</div>
+          <h3 class="look-card__title" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0.3rem 0 0.8rem;">Layered Double-Fleece Hoodie</h3>
+          <div style="display: flex; gap: 0.8rem;">
+            <a href="product-detail.html?id=nova-str-02" class="btn-primary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;">Shop Look</a>
+            <button class="btn-secondary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;" onclick="addToBag('nova-str-02', 'M', 1)">Quick Bag</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 03 -->
+      <div class="look-card" style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+        <img src="src/assets/streetwear/streetwear (3).jpg" alt="Look 03 — Nocturnal Oversized Sweatshirt" class="look-card__img" style="width: 100%; height: 100%; object-fit: cover;" />
+        <div class="look-card__overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+          <div class="look-card__tag" style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">LOOK 03 / URBAN MOBILITY</div>
+          <h3 class="look-card__title" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0.3rem 0 0.8rem;">Nocturnal Drop-Shoulder Crew</h3>
+          <div style="display: flex; gap: 0.8rem;">
+            <a href="product-detail.html?id=nova-str-03" class="btn-primary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;">Shop Look</a>
+            <button class="btn-secondary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;" onclick="addToBag('nova-str-03', 'M', 1)">Quick Bag</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 04 -->
+      <div class="look-card" style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+        <img src="src/assets/streetwear/streetwear (4).jpg" alt="Look 04 — Tactical Long-Sleeve Thermal" class="look-card__img" style="width: 100%; height: 100%; object-fit: cover;" />
+        <div class="look-card__overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+          <div class="look-card__tag" style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">LOOK 04 / BASE LAYER</div>
+          <h3 class="look-card__title" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0.3rem 0 0.8rem;">Merino Waffle Knit Thermal</h3>
+          <div style="display: flex; gap: 0.8rem;">
+            <a href="product-detail.html?id=nova-str-04" class="btn-primary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;">Shop Look</a>
+            <button class="btn-secondary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;" onclick="addToBag('nova-str-04', 'M', 1)">Quick Bag</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 05 -->
+      <div class="look-card" style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+        <img src="src/assets/streetwear/streetwear (5).jpg" alt="Look 05 — Acid Cyber Graphic Hoodie" class="look-card__img" style="width: 100%; height: 100%; object-fit: cover;" />
+        <div class="look-card__overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+          <div class="look-card__tag" style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">LOOK 05 / CYBER SCREEN</div>
+          <h3 class="look-card__title" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0.3rem 0 0.8rem;">Acid Wash Photoluminescent Hoodie</h3>
+          <div style="display: flex; gap: 0.8rem;">
+            <a href="product-detail.html?id=nova-str-05" class="btn-primary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;">Shop Look</a>
+            <button class="btn-secondary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;" onclick="addToBag('nova-str-05', 'M', 1)">Quick Bag</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 06 -->
+      <div class="look-card" style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+        <img src="src/assets/streetwear/streetwear (6).jpg" alt="Look 06 — Metropolis Technical Windbreaker" class="look-card__img" style="width: 100%; height: 100%; object-fit: cover;" />
+        <div class="look-card__overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+          <div class="look-card__tag" style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">LOOK 06 / METROPOLIS</div>
+          <h3 class="look-card__title" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0.3rem 0 0.8rem;">Reflective Pipeline Windbreaker</h3>
+          <div style="display: flex; gap: 0.8rem;">
+            <a href="product-detail.html?id=nova-str-06" class="btn-primary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;">Shop Look</a>
+            <button class="btn-secondary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;" onclick="addToBag('nova-str-06', 'M', 1)">Quick Bag</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 07 -->
+      <div class="look-card" style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+        <img src="src/assets/streetwear/streetwear (7).jpg" alt="Look 07 — Cyber Kimono Robe" class="look-card__img" style="width: 100%; height: 100%; object-fit: cover;" />
+        <div class="look-card__overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+          <div class="look-card__tag" style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">LOOK 07 / RUNWAY SILHOUETTE</div>
+          <h3 class="look-card__title" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0.3rem 0 0.8rem;">Draped Kimono Layering Robe</h3>
+          <div style="display: flex; gap: 0.8rem;">
+            <a href="product-detail.html?id=nova-str-07" class="btn-primary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;">Shop Look</a>
+            <button class="btn-secondary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;" onclick="addToBag('nova-str-07', 'M', 1)">Quick Bag</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOOK 08 -->
+      <div class="look-card" style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+        <img src="src/assets/streetwear/streetwear (8).jpg" alt="Look 08 — Urban Armored Pullover" class="look-card__img" style="width: 100%; height: 100%; object-fit: cover;" />
+        <div class="look-card__overlay" style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+          <div class="look-card__tag" style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">LOOK 08 / KINETIC ARMOR</div>
+          <h3 class="look-card__title" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0.3rem 0 0.8rem;">Reinforced Tactical Pullover</h3>
+          <div style="display: flex; gap: 0.8rem;">
+            <a href="product-detail.html?id=nova-str-08" class="btn-primary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;">Shop Look</a>
+            <button class="btn-secondary" style="padding: 0.55rem 1.1rem; font-size: 0.78rem;" onclick="addToBag('nova-str-08', 'M', 1)">Quick Bag</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MANIFESTO -->
+    <section class="manifesto-banner">
+      <div class="category-label" style="margin-bottom: 1.5rem;">The Movement Manifesto</div>
+      <p class="manifesto-quote">
+        "We reject delicate fast fashion. Streetwear must function as personal kinetic armor against the environmental extremes of the 21st century."
+      </p>
+      <a href="collection.html" class="btn-primary" style="padding: 1rem 2.4rem;">
+        Explore Full Catalog
+      </a>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-col__brand">NOVA</div>
+        <p class="footer-col__text">
+          High-performance avant-garde fashion house operating at the bleeding edge of physical fabrication and virtual cyber couture.
+        </p>
+      </div>
+      <div>
+        <div class="footer-col__heading">Ecosystem</div>
+        <ul class="footer-links">
+          <li><a href="studio.html" class="footer-link">The Studio</a></li>
+          <li><a href="collection.html" class="footer-link">Collection</a></li>
+          <li><a href="atelier.html" class="footer-link">Atelier</a></li>
+          <li><a href="streetwear.html" class="footer-link">Streetwear</a></li>
+          <li><a href="archives.html" class="footer-link">Archives</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col__heading">Client Care</div>
+        <ul class="footer-links">
+          <li><a href="checkout.html" class="footer-link">Express Checkout</a></li>
+          <li><a href="atelier.html" class="footer-link">Bespoke Fitting</a></li>
+          <li><a href="#" class="footer-link">Global Logistics</a></li>
+          <li><a href="#" class="footer-link">Authenticity NFC</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col__heading">Dispatch Access</div>
+        <p class="footer-col__text" style="font-size: 0.85rem;">
+          Subscribe to receive cryptographic drop notifications before public runway release.
+        </p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed to VIP dispatch.');">
+          <input type="email" placeholder="Your email address" class="newsletter-input" required />
+          <button type="submit" class="btn-primary" style="padding: 0.75rem 1.2rem;">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <div>&copy; 2026 NOVA CREATIVE LABS INC. ALL RIGHTS RESERVED.</div>
+      <div>TOKYO &bull; PARIS &bull; MILAN &bull; NEW YORK</div>
+    </div>
+  </footer>
+
+  <script src="src/js/cart-state.js"></script>
+</body>
+</html>

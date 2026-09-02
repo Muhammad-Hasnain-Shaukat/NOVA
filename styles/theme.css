@@ -1,0 +1,262 @@
+/* ==========================================================================
+   NOVA LUXURY & STREETWEAR THEME SYSTEM - V2 ULTRA HIGH-END
+   Avant-Garde Haute Couture & Midnight Cyber Streetwear Design Tokens
+   ========================================================================== */
+
+:root {
+  /* Ultra-Premium Typography Stack */
+  --font-luxury-title: 'Italiana', 'Cormorant Garamond', serif;
+  --font-editorial: 'Cormorant Garamond', Georgia, serif;
+  --font-display: 'Syne', -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-tech: 'Space Grotesk', 'JetBrains Mono', monospace;
+  
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+  
+  --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-theme: background 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                      color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                      border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                      backdrop-filter 0.6s ease;
+}
+
+/* ==========================================================================
+   LIGHT THEME (DEFAULT): "Luxury Fashion Showroom"
+   Aesthetic: Vogue Runway, Céline / Saint Laurent / The Row Minimal Luxury,
+              Alabaster, Champagne Gold Foil, Architectural Hauteur
+   ========================================================================== */
+:root,
+[data-theme="light"] {
+  --theme-name: 'light';
+  
+  /* Backgrounds */
+  --background: #FBFBFA;
+  --background-secondary: #F4F2EC;
+  --background-tertiary: #EBE7DE;
+  --card: #FFFFFF;
+  --card-hover: #FAF9F6;
+  --card-secondary: #F7F5F0;
+  
+  /* Foreground & Typography */
+  --foreground: #0E0E0E;
+  --foreground-secondary: #2C2C2A;
+  --foreground-muted: #726E67;
+  --foreground-subtle: #A8A49C;
+  
+  /* Luxury Accents */
+  --accent: #C5A059; /* Pure Champagne Gold */
+  --accent-light: rgba(197, 160, 89, 0.12);
+  --accent-hover: #AC8741;
+  --accent-gradient: linear-gradient(135deg, #0E0E0E 20%, #C5A059 80%, #E2C78A 100%);
+  --accent-foil: linear-gradient(135deg, #C5A059 0%, #F5E8C7 50%, #B89249 100%);
+  
+  --accent-silver: #C8C5BF;
+  --accent-silver-light: #ECEAE6;
+  
+  /* Borders & Hairlines */
+  --border: #E5E1D8;
+  --border-subtle: #EFECE5;
+  --border-focus: #0E0E0E;
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(251, 251, 250, 0.88);
+  --glass-card: rgba(255, 255, 255, 0.92);
+  --glass-border: rgba(229, 225, 216, 0.85);
+  --overlay-bg: rgba(14, 14, 14, 0.5);
+  
+  /* Shadows & Elevations */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 12px 32px -8px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 24px 50px -12px rgba(14, 14, 14, 0.08);
+  --shadow-xl: 0 36px 80px -20px rgba(14, 14, 14, 0.12);
+  --luxury-glow: 0 0 35px rgba(197, 160, 89, 0.22);
+  
+  /* Badges & Tags */
+  --badge-bg: #F4F2EC;
+  --badge-text: #4A463F;
+  --badge-border: #E0DDD4;
+  
+  /* Buttons */
+  --btn-primary-bg: #0E0E0E;
+  --btn-primary-text: #FBFBFA;
+  --btn-primary-hover: #262624;
+  
+  --btn-secondary-bg: transparent;
+  --btn-secondary-text: #0E0E0E;
+  --btn-secondary-border: #0E0E0E;
+  --btn-secondary-hover: #0E0E0E;
+  --btn-secondary-hover-text: #FBFBFA;
+  
+  /* Atmospheric Layers */
+  --hero-filter: saturate(1.02) contrast(1.03);
+  --ambient-light: radial-gradient(circle at 50% 0%, rgba(245, 237, 222, 0.9) 0%, rgba(251, 251, 250, 0) 70%);
+  --grid-pattern: radial-gradient(circle, rgba(197, 160, 89, 0.14) 1px, transparent 1px);
+}
+
+/* ==========================================================================
+   DARK THEME: "Midnight Streetwear Movement"
+   Aesthetic: Nocturnal Berlin/Tokyo Cyber Techwear, Liquid Titanium Chrome,
+              Obsidian Void, Acid Neon Highlights, High-Contrast Gradients
+   ========================================================================== */
+[data-theme="dark"] {
+  --theme-name: 'dark';
+  
+  /* Backgrounds */
+  --background: #040404;
+  --background-secondary: #0A0A0A;
+  --background-tertiary: #121212;
+  --card: #0E0E0E;
+  --card-hover: #161616;
+  --card-secondary: #141414;
+  
+  /* Foreground & Typography */
+  --foreground: #FFFFFF;
+  --foreground-secondary: #ECECEC;
+  --foreground-muted: #8E8E8E;
+  --foreground-subtle: #4D4D4D;
+  
+  /* Cyber & Chrome Accents */
+  --accent: #00F0FF; /* Electric Cyan */
+  --accent-light: rgba(0, 240, 255, 0.12);
+  --accent-hover: #39FF14; /* Acid Street Neon */
+  --accent-gradient: linear-gradient(135deg, #FFFFFF 20%, #00F0FF 80%, #39FF14 100%);
+  --accent-foil: linear-gradient(135deg, #FFFFFF 0%, #00F0FF 60%, #39FF14 100%);
+  
+  --accent-silver: #E6EDF3;
+  --accent-silver-light: rgba(230, 237, 243, 0.12);
+  
+  /* Borders & Hairlines */
+  --border: #1E1E1E;
+  --border-subtle: #161616;
+  --border-focus: #00F0FF;
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(4, 4, 4, 0.9);
+  --glass-card: rgba(14, 14, 14, 0.9);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --overlay-bg: rgba(0, 0, 0, 0.85);
+  
+  /* Shadows & Elevations */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 12px 32px -8px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 24px 50px -12px rgba(0, 240, 255, 0.15);
+  --shadow-xl: 0 36px 80px -20px rgba(0, 240, 255, 0.2);
+  --luxury-glow: 0 0 35px rgba(0, 240, 255, 0.4);
+  
+  /* Badges & Tags */
+  --badge-bg: #141414;
+  --badge-text: #00F0FF;
+  --badge-border: rgba(0, 240, 255, 0.35);
+  
+  /* Buttons */
+  --btn-primary-bg: #FFFFFF;
+  --btn-primary-text: #040404;
+  --btn-primary-hover: #E2E8F0;
+  
+  --btn-secondary-bg: transparent;
+  --btn-secondary-text: #FFFFFF;
+  --btn-secondary-border: rgba(255, 255, 255, 0.25);
+  --btn-secondary-hover: #FFFFFF;
+  --btn-secondary-hover-text: #040404;
+  
+  /* Atmospheric Layers */
+  --hero-filter: contrast(1.18) brightness(0.96);
+  --ambient-light: radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.08) 0%, rgba(4, 4, 4, 0) 70%);
+  --grid-pattern: radial-gradient(circle, rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+}
+
+/* ==========================================================================
+   GLOBAL RESET & LUXURY TYPOGRAPHY SYSTEM
+   ========================================================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: var(--transition-theme);
+  min-height: 100vh;
+  position: relative;
+  letter-spacing: -0.01em;
+}
+
+/* Luxury Grain & Ambient Background */
+.theme-ambient-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--ambient-light);
+  pointer-events: none;
+  z-index: 0;
+  transition: background 0.8s ease;
+}
+
+.theme-grid-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--grid-pattern);
+  background-size: 40px 40px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* Kinetic Cursor Spotlight */
+.cursor-spotlight {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.08) 0%, transparent 65%);
+  z-index: 1;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: multiply;
+}
+
+[data-theme="dark"] .cursor-spotlight {
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 65%);
+  mix-blend-mode: screen;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}

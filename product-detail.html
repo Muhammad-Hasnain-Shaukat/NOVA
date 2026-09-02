@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Details — NOVA Technical Streetwear</title>
+  <meta name="description" content="Detailed engineering specifications and bespoke garment architecture from NOVA." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="src/styles/shared.css" />
+
+  <style>
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--paper-dim);
+      padding: 2.5rem 0 1.5rem;
+    }
+
+    .breadcrumb a {
+      color: var(--paper-dim);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--paper);
+    }
+
+    /* PRODUCT LAYOUT */
+    .pdp-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(2.5rem, 5vw, 5rem);
+      margin-bottom: 6rem;
+      align-items: start;
+    }
+
+    /* GALLERY */
+    .pdp-gallery {
+      display: flex;
+      gap: 1.2rem;
+      position: sticky;
+      top: 100px;
+    }
+
+    .pdp-thumbnails {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .pdp-thumb {
+      width: 80px;
+      height: 105px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+      background: #000;
+    }
+
+    .pdp-thumb.active,
+    .pdp-thumb:hover {
+      opacity: 1;
+      border-color: var(--accent);
+      transform: scale(1.04);
+    }
+
+    .pdp-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pdp-main-img-wrap {
+      flex: 1;
+      height: 620px;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: #061e2c;
+      border: 1px solid var(--glass-line);
+      position: relative;
+    }
+
+    .pdp-main-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .pdp-main-img-wrap:hover .pdp-main-img {
+      transform: scale(1.05);
+    }
+
+    /* INFO COLUMN */
+    .pdp-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .pdp-badge {
+      display: inline-block;
+      align-self: flex-start;
+      font-family: var(--font-tech);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cyan-neon);
+      border: 1px solid var(--glass-line);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-pill);
+      background: var(--glass);
+    }
+
+    .pdp-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .pdp-price-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .pdp-price {
+      font-family: var(--font-tech);
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .pdp-tag {
+      font-family: var(--font-tech);
+      font-size: 0.85rem;
+      color: var(--paper-dim);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+    }
+
+    .pdp-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--paper-dim);
+    }
+
+    /* SIZES */
+    .size-selector-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .size-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .size-grid {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .size-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      border: 1px solid var(--glass-line);
+      background: var(--glass);
+      color: var(--paper);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+    }
+
+    .size-btn:hover,
+    .size-btn.active {
+      border-color: var(--accent);
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    html[data-theme="dark"] .size-btn.active {
+      background: var(--accent);
+      color: #040404;
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.6);
+    }
+
+    /* ACTION BUTTONS */
+    .pdp-actions {
+      display: flex;
+      gap: 0.9rem;
+      margin-top: 1.2rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .pdp-btn--buy {
+      flex: 1.4;
+      padding: 1rem 1.6rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+      background: var(--accent);
+      color: #040404;
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      white-space: nowrap;
+      border-radius: var(--radius-pill);
+    }
+
+    .pdp-actions__subrow {
+      display: flex;
+      gap: 0.9rem;
+      flex: 1.2;
+      align-items: center;
+    }
+
+    .pdp-add-btn {
+      flex: 1;
+      padding: 1rem 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      white-space: nowrap;
+      border-radius: var(--radius-pill);
+    }
+
+    .pdp-save-btn {
+      width: 50px;
+      height: 50px;
+      padding: 0;
+      flex: 0 0 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: var(--radius-pill);
+    }
+
+    /* SPECS ACCORDION */
+    .pdp-specs-box {
+      margin-top: 2rem;
+      background: var(--glass-card);
+      border: 1px solid var(--glass-line);
+      border-radius: var(--radius-card);
+      padding: 1.5rem;
+      backdrop-filter: blur(20px);
+    }
+
+    .specs-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .specs-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .specs-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--paper-dim);
+    }
+
+    .specs-list li::before {
+      content: '✦';
+      color: var(--cyan-neon);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 900px) {
+      .pdp-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pdp-gallery {
+        flex-direction: column-reverse;
+        position: relative;
+        top: 0;
+      }
+
+      .pdp-thumbnails {
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      .pdp-main-img-wrap {
+        height: 440px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .pdp-actions {
+        flex-direction: column;
+        gap: 0.65rem;
+      }
+
+      .pdp-btn--buy {
+        width: 100% !important;
+        flex: none !important;
+        height: 52px;
+        font-size: 0.95rem !important;
+        border-radius: 12px;
+      }
+
+      .pdp-actions__subrow {
+        width: 100% !important;
+        flex: none !important;
+        gap: 0.65rem;
+      }
+
+      .pdp-add-btn {
+        flex: 1 !important;
+        height: 48px;
+        font-size: 0.88rem !important;
+        border-radius: 12px;
+      }
+
+      .pdp-save-btn {
+        width: 48px !important;
+        height: 48px !important;
+        flex: 0 0 48px !important;
+        border-radius: 12px;
+      }
+
+      .pdp-main-img-wrap {
+        height: clamp(320px, 50vh, 420px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-nav">
+      <!-- 1. LEFT BRAND -->
+      <a href="index.html" class="site-brand">
+        <svg class="site-brand__monogram-svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14.25" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M11 22V10H13.8L18.2 17.5V10H21V22H18.2L13.8 14.5V22H11Z" fill="currentColor"/>
+        </svg>
+        <span>NOVA</span>
+      </a>
+
+      <!-- 2. CENTER NAV MENU -->
+      <nav class="nav-center-menu" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="studio.html" class="nav-link">Studio</a></li>
+          <li><a href="collection.html" class="nav-link active">Collection</a></li>
+          <li><a href="atelier.html" class="nav-link">Atelier</a></li>
+          <li><a href="streetwear.html" class="nav-link">Streetwear</a></li>
+          <li><a href="archives.html" class="nav-link">Archives</a></li>
+        </ul>
+      </nav>
+
+      <!-- 3. RIGHT ACTIONS -->
+      <div class="nav-actions">
+        <!-- THEME SWITCHER -->
+        <button class="theme-switch-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <div class="theme-switch-pill"></div>
+          <div class="theme-option light-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="4.5"></circle><line x1="12" y1="1.5" x2="12" y2="3.5"></line><line x1="12" y1="20.5" x2="12" y2="22.5"></line><line x1="4.5" y1="4.5" x2="6" y2="6"></line><line x1="18" y1="18" x2="19.5" y2="19.5"></line><line x1="1.5" y1="12" x2="3.5" y2="12"></line><line x1="20.5" y1="12" x2="22.5" y2="12"></line><line x1="4.5" y1="19.5" x2="6" y2="18"></line><line x1="18" y1="6" x2="19.5" y2="4.5"></line></svg>
+          </div>
+          <div class="theme-option dark-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </div>
+        </button>
+
+        <!-- CART BUTTON -->
+        <button class="cart-trigger-btn" onclick="openCartDrawer()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Bag</span>
+          <span class="cart-badge">0</span>
+        </button>
+
+        <!-- CONNECT BUTTON -->
+        <a href="atelier.html" class="btn-primary" style="padding: 0.65rem 1.4rem; font-size: 0.8rem;">
+          <span>Connect</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="collection.html">Collection</a>
+      <span>/</span>
+      <span id="breadcrumb-title" style="color: var(--paper);">Exo-Shell Modular Parka</span>
+    </div>
+
+    <div class="pdp-grid">
+      <!-- GALLERY -->
+      <div class="pdp-gallery">
+        <div class="pdp-thumbnails" id="pdp-thumbs">
+          <!-- Populated by JS -->
+        </div>
+        <div class="pdp-main-img-wrap">
+          <img src="" alt="Main Product Image" id="pdp-main-image" class="pdp-main-img" />
+        </div>
+      </div>
+
+      <!-- PRODUCT INFO -->
+      <div class="pdp-info">
+        <span class="pdp-badge" id="pdp-badge">Grail</span>
+        <h1 class="pdp-title" id="pdp-title">Exo-Shell Modular Parka</h1>
+
+        <div class="pdp-price-row">
+          <div class="pdp-price" id="pdp-price">$890</div>
+          <div class="pdp-tag" id="pdp-tag">Gore-Tex Pro 3L</div>
+        </div>
+
+        <p class="pdp-desc" id="pdp-desc">
+          Constructed from Japanese high-density Gore-Tex Pro 3-layer membrane with magnetic Fidlock closure storm flaps and detachable sling harness.
+        </p>
+
+        <!-- SIZES -->
+        <div class="size-selector-wrap">
+          <div class="size-header">
+            <span>Select Architecture (Size)</span>
+            <span style="color: var(--cyan-neon); cursor: pointer;" onclick="showToast('Standard Asian-Oversized silhouette fit.')">Fit Guide</span>
+          </div>
+          <div class="size-grid">
+            <button class="size-btn" onclick="selectSize('S', this)">S</button>
+            <button class="size-btn active" onclick="selectSize('M', this)">M</button>
+            <button class="size-btn" onclick="selectSize('L', this)">L</button>
+            <button class="size-btn" onclick="selectSize('XL', this)">XL</button>
+          </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="pdp-actions">
+          <button class="btn-primary pdp-btn--buy" id="pdp-checkout-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+            <span>Proceed to Payment &rarr;</span>
+          </button>
+
+          <div class="pdp-actions__subrow">
+            <button class="btn-secondary pdp-add-btn" id="pdp-add-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M16 10a4 4 0 0 1-8 0"></path>
+              </svg>
+              <span>Add to Bag</span>
+            </button>
+
+            <button class="btn-secondary pdp-save-btn" onclick="showToast('Saved to your private vault.');" aria-label="Save Grail">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- TECHNICAL SPECS -->
+        <div class="pdp-specs-box">
+          <div class="specs-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>Material & Fabrication Specs</span>
+          </div>
+          <ul class="specs-list" id="pdp-specs-list">
+            <!-- Injected by JS -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-col__brand">NOVA</div>
+        <p class="footer-col__text">
+          High-performance avant-garde fashion house operating at the bleeding edge of physical fabrication and virtual cyber couture.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-col__heading">Ecosystem</h4>
+        <ul class="footer-links">
+          <li><a href="studio.html" class="footer-link">The Studio</a></li>
+          <li><a href="collection.html" class="footer-link">Collection</a></li>
+          <li><a href="atelier.html" class="footer-link">Atelier</a></li>
+          <li><a href="streetwear.html" class="footer-link">Streetwear</a></li>
+          <li><a href="archives.html" class="footer-link">Archives</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col__heading">Client Care</h4>
+        <ul class="footer-links">
+          <li><a href="checkout.html" class="footer-link">Express Checkout</a></li>
+          <li><a href="atelier.html" class="footer-link">Bespoke Fitting</a></li>
+          <li><a href="#" class="footer-link">Global Logistics</a></li>
+          <li><a href="#" class="footer-link">Authenticity NFC</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col__heading">Dispatch Access</h4>
+        <p class="footer-col__text" style="font-size: 0.85rem;">
+          Subscribe to receive cryptographic drop notifications before public runway release.
+        </p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed to VIP dispatch.');">
+          <input type="email" placeholder="Your email address" class="newsletter-input" required />
+          <button type="submit" class="btn-primary" style="padding: 0.75rem 1.2rem;">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <div>&copy; 2026 NOVA CREATIVE LABS INC. ALL RIGHTS RESERVED.</div>
+      <div>TOKYO &bull; PARIS &bull; MILAN &bull; NEW YORK</div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script src="src/js/cart-state.js"></script>
+  <script>
+    let selectedSize = 'M';
+    let currentProduct = NOVA_PRODUCTS[0];
+
+    function selectSize(size, el) {
+      selectedSize = size;
+      document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function loadProduct() {
+      const params = new URLSearchParams(window.location.search);
+      const prodId = params.get('id');
+      if (prodId) {
+        const found = NOVA_PRODUCTS.find(p => p.id === prodId);
+        if (found) currentProduct = found;
+      }
+
+      document.title = `${currentProduct.name} — NOVA`;
+      document.getElementById('breadcrumb-title').textContent = currentProduct.name;
+      document.getElementById('pdp-badge').textContent = currentProduct.badge || 'Verified System';
+      document.getElementById('pdp-title').textContent = currentProduct.name;
+      document.getElementById('pdp-price').textContent = `$${currentProduct.price.toLocaleString()}`;
+      document.getElementById('pdp-tag').textContent = currentProduct.category;
+      document.getElementById('pdp-desc').textContent = currentProduct.description;
+
+      const mainImg = document.getElementById('pdp-main-image');
+      mainImg.src = currentProduct.image;
+      mainImg.alt = currentProduct.name;
+
+      // Gallery Thumbnails (use product image & related perspectives)
+      const thumbsContainer = document.getElementById('pdp-thumbs');
+      const gallery = currentProduct.gallery || [currentProduct.image];
+      thumbsContainer.innerHTML = gallery.map((imgSrc, idx) => `
+        <div class="pdp-thumb ${idx === 0 ? 'active' : ''}" onclick="switchImage('${imgSrc}', this)">
+          <img src="${imgSrc}" alt="${currentProduct.name} View ${idx + 1}" />
+        </div>
+      `).join('');
+
+      // Default specs based on category
+      const specsContainer = document.getElementById('pdp-specs-list');
+      const specs = currentProduct.specs || [
+        `Primary Material: Weatherproof Membrane / Reinforced Composite`,
+        `Hardware: Fidlock Magnetic & YKK AquaGuard Water-Sealed Zippers`,
+        `Origin: Engineered in Tokyo / Handcrafted in Kyoto`,
+        `Authentication: Encrypted Physical NFC Microchip Tag Included`,
+        `Care: Professional Technical Cleaning or Gentle Cold Hand Wash`
+      ];
+      specsContainer.innerHTML = specs.map(spec => `
+        <li>${spec}</li>
+      `).join('');
+
+      // Add to Bag Button -> ONLY NOTIFIES (NO PAGE REDIRECT)
+      document.getElementById('pdp-add-btn').onclick = function() {
+        addToBag(currentProduct.id, selectedSize, 1);
+      };
+
+      // PROCEED TO PAYMENT BUTTON -> AUTO-LOADS INTO CHECKOUT WITH PARAMS
+      document.getElementById('pdp-checkout-btn').onclick = function() {
+        addToBag(currentProduct.id, selectedSize, 1);
+        window.location.href = `checkout.html?id=${encodeURIComponent(currentProduct.id)}&size=${encodeURIComponent(selectedSize)}&qty=1`;
+      };
+    }
+
+    function switchImage(imgSrc, el) {
+      document.getElementById('pdp-main-image').src = imgSrc;
+      document.querySelectorAll('.pdp-thumb').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProduct);
+  </script>
+</body>
+</html>

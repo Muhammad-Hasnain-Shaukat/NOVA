@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Archives — NOVA Vault & Historic Seasons</title>
+  <meta name="description" content="Explore NOVA Vault Archives: Historic runway collections, sold-out collector grails, and retrospective design timelines." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="src/styles/shared.css" />
+
+  <style>
+    .archive-hero {
+      padding: clamp(3rem, 7vh, 5.5rem) 0 3rem;
+      text-align: center;
+    }
+
+    .archive-hero__badge {
+      display: inline-block;
+      font-family: var(--font-tech);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan-neon);
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--glass-line);
+      padding: 0.35rem 0.95rem;
+      border-radius: var(--radius-pill);
+      background: var(--glass);
+    }
+
+    .archive-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6.5vw, 5rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 0.95;
+      margin-bottom: 1.2rem;
+    }
+
+    .archive-hero__text {
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      color: var(--paper-dim);
+      max-width: 680px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* TIMELINE */
+    .timeline {
+      position: relative;
+      max-width: 1100px;
+      margin: 4rem auto 6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: var(--glass-line);
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(even) {
+      direction: rtl;
+    }
+
+    .timeline-item:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 3px solid #105479;
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.8);
+      z-index: 2;
+    }
+
+    html[data-theme="dark"] .timeline-dot {
+      background: var(--accent);
+      border-color: #040404;
+    }
+
+    .timeline-card {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-line);
+      border-radius: var(--radius-card);
+      padding: 2.2rem;
+      backdrop-filter: blur(20px);
+    }
+
+    .timeline-img-wrap {
+      width: 100%;
+      height: 340px;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      border: 1px solid var(--glass-line);
+      background: #061e2c;
+    }
+
+    .timeline-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .timeline-img-wrap:hover .timeline-img {
+      transform: scale(1.05);
+    }
+
+    .timeline-year {
+      font-family: var(--font-tech);
+      font-size: 0.85rem;
+      color: var(--cyan-neon);
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .timeline-desc {
+      font-size: 0.95rem;
+      color: var(--paper-dim);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 860px) {
+      .timeline::before {
+        left: 15px;
+      }
+      .timeline-dot {
+        left: 15px;
+      }
+      .timeline-item, .timeline-item:nth-child(even) {
+        grid-template-columns: 1fr;
+        padding-left: 45px;
+        gap: 1.2rem;
+        direction: ltr;
+      }
+      .timeline-img-wrap {
+        height: auto !important;
+        aspect-ratio: 16 / 10 !important;
+        width: 100% !important;
+      }
+      .timeline-img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .timeline-img-wrap {
+        aspect-ratio: 16 / 10 !important;
+      }
+      .vault-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.2rem !important;
+      }
+      .vault-card {
+        aspect-ratio: 16 / 11 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-nav">
+      <!-- 1. LEFT BRAND -->
+      <a href="index.html" class="site-brand">
+        <svg class="site-brand__monogram-svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14.25" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M11 22V10H13.8L18.2 17.5V10H21V22H18.2L13.8 14.5V22H11Z" fill="currentColor"/>
+        </svg>
+        <span>NOVA</span>
+      </a>
+
+      <!-- 2. CENTER NAV MENU -->
+      <nav class="nav-center-menu" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="studio.html" class="nav-link">Studio</a></li>
+          <li><a href="collection.html" class="nav-link">Collection</a></li>
+          <li><a href="atelier.html" class="nav-link">Atelier</a></li>
+          <li><a href="streetwear.html" class="nav-link">Streetwear</a></li>
+          <li><a href="archives.html" class="nav-link active">Archives</a></li>
+        </ul>
+      </nav>
+
+      <!-- 3. RIGHT ACTIONS -->
+      <div class="nav-actions">
+        <!-- THEME SWITCHER -->
+        <button class="theme-switch-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <div class="theme-switch-pill"></div>
+          <div class="theme-option light-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="4.5"></circle><line x1="12" y1="1.5" x2="12" y2="3.5"></line><line x1="12" y1="20.5" x2="12" y2="22.5"></line><line x1="4.5" y1="4.5" x2="6" y2="6"></line><line x1="18" y1="18" x2="19.5" y2="19.5"></line><line x1="1.5" y1="12" x2="3.5" y2="12"></line><line x1="20.5" y1="12" x2="22.5" y2="12"></line><line x1="4.5" y1="19.5" x2="6" y2="18"></line><line x1="18" y1="6" x2="19.5" y2="4.5"></line></svg>
+          </div>
+          <div class="theme-option dark-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </div>
+        </button>
+
+        <!-- CART BUTTON -->
+        <button class="cart-trigger-btn" onclick="openCartDrawer()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Bag</span>
+          <span class="cart-badge">0</span>
+        </button>
+
+        <!-- CONNECT BUTTON -->
+        <a href="atelier.html" class="btn-primary" style="padding: 0.65rem 1.4rem; font-size: 0.8rem;">
+          <span>Connect</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN ARCHIVE CONTENT -->
+  <main class="container">
+    <section class="category-hero">
+      <div class="category-label">THE VAULT & RETROSPECTIVE // 2026</div>
+      <h1 class="category-title">Historic Archives</h1>
+      <p class="category-subtitle">
+        A permanent retrospective of sold-out grail releases, inaugural runway showcases, and landmark material innovations.
+      </p>
+
+      <!-- CENTERED METADATA BAR -->
+      <div class="category-meta-bar">
+        <div class="meta-item">
+          <span class="meta-item__label">Timeline</span>
+          <span class="meta-item__value">Season 01 — Season 04</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Grail Pieces</span>
+          <span class="meta-item__value">Sold Out Vault Items</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Archival Value</span>
+          <span class="meta-item__value">$18.4M Catalog Index</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Provenance</span>
+          <span class="meta-item__value">Encrypted Historic Ledger</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <div class="timeline" style="margin-bottom: 5rem;">
+      <!-- SEASON 01 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2023 &bull; SEASON 01</div>
+          <h3 class="timeline-title">Genesis: Zero Horizon</h3>
+          <p class="timeline-desc">
+            The inaugural release of NOVA’s modular Kevlar shell system in Tokyo. Limited to 200 serialized garments worldwide. Sold out in 18 minutes.
+          </p>
+        </div>
+        <div class="timeline-img-wrap">
+          <img src="src/assets/archives/archive.jpg" alt="Season 01 Genesis" class="timeline-img" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+      </div>
+
+      <!-- SEASON 02 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2024 &bull; SEASON 02</div>
+          <h3 class="timeline-title">Project Tactical Rigs</h3>
+          <p class="timeline-desc">
+            Debuted at Milan Fashion Week. Introduced the patented magnetic cross-wrap harness and weatherproof Schoeller 3XDRY textile membranes.
+          </p>
+        </div>
+        <div class="timeline-img-wrap">
+          <img src="src/assets/tactical/tactical rigs.jpg" alt="Season 02 Tactical Rigs" class="timeline-img" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+      </div>
+
+      <!-- SEASON 03 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2025 &bull; SEASON 03</div>
+          <h3 class="timeline-title">The Kinetic Armor Drop</h3>
+          <p class="timeline-desc">
+            First luxury outerwear pieces constructed with aerogel composites rated to -25°C. Features cryptographic NFC physical-to-digital twin pairings.
+          </p>
+        </div>
+        <div class="timeline-img-wrap">
+          <img src="src/assets/streetwear/streetwear (8).jpg" alt="Season 03 Kinetic Armor" class="timeline-img" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+      </div>
+
+      <!-- SEASON 04 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2026 &bull; SEASON 04</div>
+          <h3 class="timeline-title">Apex Articulated Bottoms</h3>
+          <p class="timeline-desc">
+            3D pleated knee articulation engineered with waterproof Cordura and magnetic Fidlock pocket attachments.
+          </p>
+        </div>
+        <div class="timeline-img-wrap">
+          <img src="src/assets/bottoms/bottoms.jpg" alt="Season 04 Bottoms" class="timeline-img" style="width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 6-CARD HISTORIC GRAIL VAULT GALLERY -->
+    <div style="margin-bottom: 5rem;">
+      <div class="category-label" style="margin-bottom: 1.5rem;">Vault Retrospective // Verified Grails</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+        <div style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+          <img src="src/assets/footwear/footwear (6).jpg" alt="Vault Grail 01" style="width: 100%; height: 100%; object-fit: cover;" />
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+            <div style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">VAULT GRAIL 01 / FOOTWEAR</div>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 0.2rem;">Zero Horizon Cyber Boot (1-of-50)</h4>
+          </div>
+        </div>
+        <div style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+          <img src="src/assets/accessories/acessories (5).jpg" alt="Vault Grail 02" style="width: 100%; height: 100%; object-fit: cover;" />
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+            <div style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">VAULT GRAIL 02 / CARRY</div>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 0.2rem;">Ballistic Roll-Top Backpack 35L</h4>
+          </div>
+        </div>
+        <div style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+          <img src="src/assets/outerwear/outwear (4).jpg" alt="Vault Grail 03" style="width: 100%; height: 100%; object-fit: cover;" />
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+            <div style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">VAULT GRAIL 03 / OUTERWEAR</div>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 0.2rem;">Sub-Zero Aerogel Prototype</h4>
+          </div>
+        </div>
+        <div style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+          <img src="src/assets/tactical/tactical rigs (4).jpg" alt="Vault Grail 04" style="width: 100%; height: 100%; object-fit: cover;" />
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+            <div style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">VAULT GRAIL 04 / RIGS</div>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 0.2rem;">Combat Utility Rig V2</h4>
+          </div>
+        </div>
+        <div style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+          <img src="src/assets/bottoms/bottoms (3).jpg" alt="Vault Grail 05" style="width: 100%; height: 100%; object-fit: cover;" />
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+            <div style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">VAULT GRAIL 05 / BOTTOMS</div>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 0.2rem;">Cyber Drop-Crotch Twill</h4>
+          </div>
+        </div>
+        <div style="border-radius: 16px; overflow: hidden; background: var(--glass); border: 1px solid var(--glass-line); aspect-ratio: 4/5; position: relative;">
+          <img src="src/assets/studio/studio (10).jpg" alt="Vault Grail 06" style="width: 100%; height: 100%; object-fit: cover;" />
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 1.5rem;">
+            <div style="font-family: var(--font-tech); font-size: 0.68rem; color: var(--cyan-neon); letter-spacing: 0.16em;">VAULT GRAIL 06 / EXPERIMENTAL</div>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 0.2rem;">Thermal Dynamics Testing Sample</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-col__brand">NOVA</div>
+        <p class="footer-col__text">
+          High-performance avant-garde fashion house operating at the bleeding edge of physical fabrication and virtual cyber couture.
+        </p>
+      </div>
+      <div>
+        <h4 class="footer-col__heading">Ecosystem</h4>
+        <ul class="footer-links">
+          <li><a href="studio.html" class="footer-link">The Studio</a></li>
+          <li><a href="collection.html" class="footer-link">Collection</a></li>
+          <li><a href="atelier.html" class="footer-link">Atelier</a></li>
+          <li><a href="streetwear.html" class="footer-link">Streetwear</a></li>
+          <li><a href="archives.html" class="footer-link">Archives</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col__heading">Client Care</div>
+        <ul class="footer-links">
+          <li><a href="checkout.html" class="footer-link">Express Checkout</a></li>
+          <li><a href="atelier.html" class="footer-link">Bespoke Fitting</a></li>
+          <li><a href="#" class="footer-link">Global Logistics</a></li>
+          <li><a href="#" class="footer-link">Authenticity NFC</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col__heading">Dispatch Access</div>
+        <p class="footer-col__text" style="font-size: 0.85rem;">
+          Subscribe to receive cryptographic drop notifications before public runway release.
+        </p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed to VIP dispatch.');">
+          <input type="email" placeholder="Your email address" class="newsletter-input" required />
+          <button type="submit" class="btn-primary" style="padding: 0.75rem 1.2rem;">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <div>&copy; 2026 NOVA CREATIVE LABS INC. ALL RIGHTS RESERVED.</div>
+      <div>TOKYO &bull; PARIS &bull; MILAN &bull; NEW YORK</div>
+    </div>
+  </footer>
+
+  <script src="src/js/cart-state.js"></script>
+</body>
+</html>

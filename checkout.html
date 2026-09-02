@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Express Checkout — NOVA Technical Streetwear</title>
+  <meta name="description" content="Secure encrypted checkout for NOVA luxury technical streetwear." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="src/styles/shared.css" />
+
+  <style>
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: clamp(2rem, 4vw, 4.5rem);
+      padding: 3rem 0 6rem;
+      align-items: start;
+    }
+
+    .checkout-card {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-line);
+      border-radius: var(--radius-card);
+      padding: clamp(1.5rem, 2.5vw, 2.5rem);
+      backdrop-filter: blur(20px);
+      margin-bottom: 2rem;
+    }
+
+    .checkout-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .form-group-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--paper-dim);
+    }
+
+    .form-input {
+      background: var(--glass-input);
+      border: 1px solid var(--glass-line);
+      color: var(--paper);
+      padding: 0.85rem 1.1rem;
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* PAYMENT METHOD TABS */
+    .payment-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .payment-tab {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--glass-line);
+      color: var(--paper);
+      padding: 0.85rem 0.5rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+
+    .payment-tab:hover,
+    .payment-tab.active {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    html[data-theme="dark"] .payment-tab.active {
+      background: var(--accent);
+      color: #040404;
+    }
+
+    /* ORDER SUMMARY COLUMN */
+    .order-summary-box {
+      background: var(--glass-card);
+      border: 1px solid var(--glass-line);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 100px;
+    }
+
+    .summary-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 280px;
+      overflow-y: auto;
+      margin-bottom: 1.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .promo-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .promo-input {
+      flex: 1;
+      background: var(--glass-input);
+      border: 1px solid var(--glass-line);
+      color: var(--paper);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--paper-dim);
+      margin-bottom: 0.75rem;
+    }
+
+    .calc-row.total-row {
+      border-top: 1px solid var(--glass-line);
+      padding-top: 1rem;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--paper);
+    }
+
+    .place-order-btn {
+      width: 100%;
+      padding: 1.15rem;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    /* CONFIRMATION MODAL */
+    .confirmation-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .confirmation-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .confirmation-card {
+      background: var(--glass-card);
+      border: 1px solid var(--accent);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      max-width: 540px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.6);
+      transform: scale(0.9);
+      transition: transform 0.4s var(--ease-out-expo);
+    }
+
+    .confirmation-backdrop.open .confirmation-card {
+      transform: scale(1);
+    }
+
+    @media (max-width: 900px) {
+      .checkout-layout {
+        grid-template-columns: 1fr;
+      }
+      .form-group-row {
+        grid-template-columns: 1fr;
+      }
+      .order-summary-box {
+        position: relative;
+        top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="site-nav">
+      <!-- 1. LEFT BRAND -->
+      <a href="index.html" class="site-brand">
+        <svg class="site-brand__monogram-svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14.25" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M11 22V10H13.8L18.2 17.5V10H21V22H18.2L13.8 14.5V22H11Z" fill="currentColor"/>
+        </svg>
+        <span>NOVA</span>
+      </a>
+
+      <!-- 2. CENTER NAV MENU -->
+      <nav class="nav-center-menu" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="studio.html" class="nav-link">Studio</a></li>
+          <li><a href="collection.html" class="nav-link">Collection</a></li>
+          <li><a href="atelier.html" class="nav-link">Atelier</a></li>
+          <li><a href="streetwear.html" class="nav-link">Streetwear</a></li>
+          <li><a href="archives.html" class="nav-link">Archives</a></li>
+        </ul>
+      </nav>
+
+      <!-- 3. RIGHT ACTIONS -->
+      <div class="nav-actions">
+        <!-- THEME SWITCHER -->
+        <button class="theme-switch-btn" onclick="toggleTheme()" aria-label="Toggle Theme">
+          <div class="theme-switch-pill"></div>
+          <div class="theme-option light-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="4.5"></circle><line x1="12" y1="1.5" x2="12" y2="3.5"></line><line x1="12" y1="20.5" x2="12" y2="22.5"></line><line x1="4.5" y1="4.5" x2="6" y2="6"></line><line x1="18" y1="18" x2="19.5" y2="19.5"></line><line x1="1.5" y1="12" x2="3.5" y2="12"></line><line x1="20.5" y1="12" x2="22.5" y2="12"></line><line x1="4.5" y1="19.5" x2="6" y2="18"></line><line x1="18" y1="6" x2="19.5" y2="4.5"></line></svg>
+          </div>
+          <div class="theme-option dark-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </div>
+        </button>
+
+        <a href="collection.html" class="btn-secondary" style="padding: 0.55rem 1.15rem; font-size: 0.8rem;">
+          &larr; Catalog
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CHECKOUT -->
+  <main class="container">
+    <div class="checkout-layout">
+      <!-- LEFT: FORMS -->
+      <form id="checkout-form" onsubmit="handlePlaceOrder(event)">
+        <!-- CONTACT -->
+        <div class="checkout-card">
+          <div class="checkout-title">
+            <span>1. Identification & Dispatch</span>
+          </div>
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label">Email for Cryptographic Receipt</label>
+              <input type="email" class="form-input" placeholder="alexander@domain.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone for Courier Tracking</label>
+              <input type="tel" class="form-input" placeholder="+1 (555) 019-2834" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- SHIPPING -->
+        <div class="checkout-card">
+          <div class="checkout-title">
+            <span>2. Global Delivery Coordinates</span>
+          </div>
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-input" placeholder="Alexander" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-input" placeholder="Vance" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Delivery Street Address</label>
+            <input type="text" class="form-input" placeholder="742 Evergreen Terrace, Penthouse B" required />
+          </div>
+
+          <div class="form-group-row">
+            <div class="form-group">
+              <label class="form-label">City / Region</label>
+              <input type="text" class="form-input" placeholder="Neo Tokyo / New York" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Postal / Zip Code</label>
+              <input type="text" class="form-input" placeholder="10001" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- PAYMENT METHOD -->
+        <div class="checkout-card">
+          <div class="checkout-title">
+            <span>3. Payment Protocol</span>
+          </div>
+
+          <div class="payment-tabs">
+            <button type="button" class="payment-tab active" onclick="selectPaymentTab('card', this)">Card (Encrypted)</button>
+            <button type="button" class="payment-tab" onclick="selectPaymentTab('apple', this)">Apple Pay</button>
+            <button type="button" class="payment-tab" onclick="selectPaymentTab('crypto', this)">Web3 Crypto</button>
+          </div>
+
+          <div id="card-fields">
+            <div class="form-group">
+              <label class="form-label">Card Number</label>
+              <input type="text" class="form-input" placeholder="4242 &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 4242" required />
+            </div>
+            <div class="form-group-row">
+              <div class="form-group">
+                <label class="form-label">Expiry (MM/YY)</label>
+                <input type="text" class="form-input" placeholder="12/28" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">CVC / CVV</label>
+                <input type="text" class="form-input" placeholder="982" required />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary place-order-btn">
+          Authorize & Place Order
+        </button>
+      </form>
+
+      <!-- RIGHT: ORDER SUMMARY -->
+      <div class="order-summary-box">
+        <div class="checkout-title" style="margin-bottom: 1.2rem;">
+          <span>Order Overview</span>
+        </div>
+
+        <div class="summary-items-list" id="summary-items">
+          <!-- Injected by JS -->
+        </div>
+
+        <div class="promo-row">
+          <input type="text" id="promo-input" class="promo-input" placeholder="Promo Code (Try: NOVA2026)" />
+          <button type="button" class="btn-secondary" style="padding: 0.6rem 1rem;" onclick="applyPromo()">Apply</button>
+        </div>
+
+        <div class="calc-row">
+          <span>Subtotal</span>
+          <span id="summary-subtotal">$0.00</span>
+        </div>
+        <div class="calc-row">
+          <span>Shipping Tier</span>
+          <span style="color: var(--cyan-neon);">Complimentary Express ($0.00)</span>
+        </div>
+        <div class="calc-row" id="discount-row" style="display: none; color: var(--cyan-neon);">
+          <span>Promo Discount</span>
+          <span id="discount-val">-$100.00</span>
+        </div>
+        <div class="calc-row total-row">
+          <span>Final Total</span>
+          <span id="summary-total">$0.00</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- CONFIRMATION MODAL -->
+  <div class="confirmation-backdrop" id="confirmation-modal">
+    <div class="confirmation-card">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--glass); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: var(--cyan-neon);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <h2 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.8rem;">
+        Order Authorized
+      </h2>
+      <p style="color: var(--paper-dim); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+        Your technical garments are being prepared at the Florence Atelier. Tracking coordinates have been dispatched.
+      </p>
+      <div style="background: rgba(0,0,0,0.4); border: 1px dashed var(--glass-line); padding: 1rem; border-radius: 12px; font-family: var(--font-tech); font-size: 1rem; margin-bottom: 2rem;">
+        ORDER ID: <span id="conf-order-id" style="color: var(--cyan-neon); font-weight: 700;">NOVA-94821</span>
+      </div>
+      <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="collection.html" class="btn-primary" onclick="clearCartAndRedirect()">Return to Collection</a>
+        <a href="index.html" class="btn-secondary">Home</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script src="src/js/cart-state.js"></script>
+  <script>
+    let discount = 0;
+
+    function initCheckout() {
+      const params = new URLSearchParams(window.location.search);
+      const prodId = params.get('id');
+      const size = params.get('size') || 'M';
+      const qty = parseInt(params.get('qty')) || 1;
+
+      if (prodId) {
+        const product = NOVA_PRODUCTS.find(p => p.id === prodId);
+        if (product) {
+          const exists = cartManager.cart.some(item => item.id === prodId && item.size === size);
+          if (!exists) {
+            cartManager.cart.push({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              image: product.image,
+              category: product.category,
+              size: size,
+              qty: qty
+            });
+            cartManager.saveCart();
+          }
+        }
+      }
+
+      // Auto-populate fallback so product and total are ALWAYS automatically present
+      if (cartManager.cart.length === 0) {
+        const fallback = NOVA_PRODUCTS[0];
+        cartManager.cart.push({
+          id: fallback.id,
+          name: fallback.name,
+          price: fallback.price,
+          image: fallback.image,
+          category: fallback.category,
+          size: 'M',
+          qty: 1
+        });
+        cartManager.saveCart();
+      }
+
+      renderSummary();
+    }
+
+    function renderSummary() {
+      const list = document.getElementById('summary-items');
+      const cartItems = cartManager.cart;
+      const subtotal = cartManager.getSubtotal();
+
+      list.innerHTML = cartItems.map(item => `
+        <div style="display: flex; gap: 1rem; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--glass-line);">
+          <img src="${item.image}" alt="${item.name}" style="width: 58px; height: 72px; object-fit: cover; border-radius: 10px; border: 1px solid var(--glass-line); background: #000;" />
+          <div style="flex: 1;">
+            <div style="font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--paper); line-height: 1.2;">${item.name}</div>
+            <div style="font-size: 0.78rem; color: var(--paper-dim); margin: 0.25rem 0;">Category: ${item.category}</div>
+            <div style="display: inline-block; font-family: var(--font-tech); font-size: 0.72rem; color: var(--cyan-neon); background: rgba(0, 240, 255, 0.1); padding: 0.2rem 0.6rem; border-radius: 4px;">Size: ${item.size} &times; ${item.qty}</div>
+          </div>
+          <div style="font-family: var(--font-tech); font-weight: 700; font-size: 1.05rem; color: var(--paper);">
+            $${(item.price * item.qty).toLocaleString()}
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('summary-subtotal').textContent = `$${subtotal.toLocaleString()} USD`;
+      const finalTotal = Math.max(0, subtotal - discount);
+      document.getElementById('summary-total').textContent = `$${finalTotal.toLocaleString()} USD`;
+    }
+
+    function applyPromo() {
+      const code = document.getElementById('promo-input').value.trim().toUpperCase();
+      if (code === 'NOVA2026') {
+        discount = 100;
+        document.getElementById('discount-row').style.display = 'flex';
+        showToast('Promo code applied: $100 off!');
+        renderSummary();
+      } else {
+        showToast('Invalid promo code. Try NOVA2026');
+      }
+    }
+
+    function selectPaymentTab(type, el) {
+      document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+      if (type === 'crypto') {
+        showToast('Web3 Wallet Connect prompt initialized.');
+      } else if (type === 'apple') {
+        showToast('Apple Pay TouchID / FaceID ready.');
+      }
+    }
+
+    function handlePlaceOrder(e) {
+      e.preventDefault();
+      const orderId = 'NOVA-' + Math.floor(100000 + Math.random() * 900000);
+      document.getElementById('conf-order-id').textContent = orderId;
+      document.getElementById('confirmation-modal').classList.add('open');
+      cartManager.cart = [];
+      cartManager.saveCart();
+    }
+
+    function clearCartAndRedirect() {
+      cartManager.cart = [];
+      cartManager.saveCart();
+    }
+
+    document.addEventListener('DOMContentLoaded', initCheckout);
+  </script>
+</body>
+</html>

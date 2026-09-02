@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio — NOVA</title>
+  <meta name="description" content="NOVA Studio — Material research, architectural fabrication, and creative laboratory." />
+
+  <!-- Google Fonts: Archivo, Inter, Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="src/styles/shared.css" />
+
+  <style>
+    /* STUDIO PAGE MINIMAL STYLES (CENTERED) */
+    .studio-hero {
+      padding: 4.5rem 0 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .studio-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: var(--font-tech);
+      font-size: 0.76rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cyan-neon);
+      margin-bottom: 0.8rem;
+    }
+
+    .studio-label::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--cyan-neon);
+    }
+
+    .studio-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.2vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 0.8rem;
+      color: var(--paper);
+      text-align: center;
+    }
+
+    .studio-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--paper-dim);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* MINIMAL STATS ROW (CENTERED) */
+    .studio-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: clamp(1.5rem, 3.5vw, 4rem);
+      padding: 1.6rem 0;
+      margin: 2rem auto 3.5rem;
+      border-top: 1px solid var(--glass-line);
+      border-bottom: 1px solid var(--glass-line);
+      width: 100%;
+      max-width: 1100px;
+      text-align: center;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .meta-item__label {
+      font-family: var(--font-tech);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--paper-faint);
+      text-align: center;
+    }
+
+    .meta-item__value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--paper);
+      text-align: center;
+    }
+
+    /* EDITORIAL GALLERY WITH LARGE FRAMES & ZERO GAPS */
+    .studio-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 5rem;
+      width: 100%;
+    }
+
+    .studio-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--glass);
+      border: 1px solid var(--glass-line);
+      aspect-ratio: 4 / 5;
+      cursor: pointer;
+      transition: transform 0.4s var(--ease-out-expo), border-color 0.3s ease, box-shadow 0.4s ease;
+    }
+
+    .studio-card.span-2 {
+      grid-column: span 2;
+      aspect-ratio: 16 / 10;
+    }
+
+    .studio-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .studio-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s var(--ease-out-expo), filter 0.5s ease;
+      background-color: #050505;
+    }
+
+    .studio-card:hover .studio-card__img {
+      transform: scale(1.05);
+    }
+
+    .studio-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.88) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      opacity: 0.95;
+      transition: opacity 0.3s ease;
+    }
+
+    .studio-card__tag {
+      font-family: var(--font-tech);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cyan-neon);
+      margin-bottom: 0.3rem;
+    }
+
+    .studio-card__caption {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    /* LIGHTBOX MODAL */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.94);
+      backdrop-filter: blur(16px);
+      z-index: 4000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .lightbox-modal.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      border: 1px solid var(--glass-line);
+      transform: scale(0.96);
+      transition: transform 0.4s var(--ease-out-expo);
+    }
+
+    .lightbox-modal.open .lightbox-img {
+      transform: scale(1);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--glass-line);
+      color: #ffffff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .lightbox-close:hover {
+      transform: rotate(90deg);
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    @media (max-width: 960px) {
+      .studio-gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+      }
+      .studio-card.span-2 {
+        grid-column: span 2;
+        aspect-ratio: 16 / 10;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .studio-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+      .studio-card {
+        grid-column: span 1 !important;
+        aspect-ratio: 16 / 11 !important;
+        width: 100%;
+      }
+      .studio-card.span-2 {
+        grid-column: span 1 !important;
+        aspect-ratio: 16 / 10 !important;
+      }
+      .studio-card__img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- UNIVERSAL 3-COLUMN HEADER -->
+  <header class="site-header">
+    <div class="site-nav">
+      <!-- 1. LEFT BRAND -->
+      <a href="index.html" class="site-brand">
+        <svg class="site-brand__monogram-svg" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14.25" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M11 22V10H13.8L18.2 17.5V10H21V22H18.2L13.8 14.5V22H11Z" fill="currentColor"/>
+        </svg>
+        <span>NOVA</span>
+      </a>
+
+      <!-- 2. CENTER NAV MENU -->
+      <nav class="nav-center-menu" aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="studio.html" class="nav-link active">Studio</a></li>
+          <li><a href="collection.html" class="nav-link">Collection</a></li>
+          <li><a href="atelier.html" class="nav-link">Atelier</a></li>
+          <li><a href="streetwear.html" class="nav-link">Streetwear</a></li>
+          <li><a href="archives.html" class="nav-link">Archives</a></li>
+        </ul>
+      </nav>
+
+      <!-- 3. RIGHT ACTIONS -->
+      <div class="nav-actions">
+        <!-- THEME SWITCHER -->
+        <button
+          class="theme-switch-btn"
+          id="theme-toggle-btn"
+          type="button"
+          onclick="toggleTheme()"
+          aria-label="Toggle Theme"
+          title="Toggle Theme"
+        >
+          <div class="theme-switch-pill" id="theme-pill"></div>
+          <div class="theme-option light-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="4.5"></circle>
+              <line x1="12" y1="1.5" x2="12" y2="3.5"></line>
+              <line x1="12" y1="20.5" x2="12" y2="22.5"></line>
+              <line x1="4.5" y1="4.5" x2="6" y2="6"></line>
+              <line x1="18" y1="18" x2="19.5" y2="19.5"></line>
+              <line x1="1.5" y1="12" x2="3.5" y2="12"></line>
+              <line x1="20.5" y1="12" x2="22.5" y2="12"></line>
+              <line x1="4.5" y1="19.5" x2="6" y2="18"></line>
+              <line x1="18" y1="6" x2="19.5" y2="4.5"></line>
+            </svg>
+          </div>
+          <div class="theme-option dark-opt">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </div>
+        </button>
+
+        <!-- BAG TRIGGER -->
+        <button class="cart-trigger-btn" onclick="openCartDrawer()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Bag</span>
+          <span class="cart-badge">0</span>
+        </button>
+
+        <!-- CONNECT -->
+        <a href="atelier.html" class="btn-primary" style="padding: 0.65rem 1.4rem; font-size: 0.8rem;">
+          <span>Connect</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- MINIMAL STUDIO HERO -->
+    <section class="studio-hero">
+      <div class="studio-label">Laboratory & Archives // 2026</div>
+      <h1 class="studio-title">Creative Studio</h1>
+      <p class="studio-subtitle">
+        Material research, precision tailoring, and avant-garde streetwear prototyping.
+      </p>
+
+      <!-- MINIMAL META ROW -->
+      <div class="studio-meta-bar">
+        <div class="meta-item">
+          <span class="meta-item__label">Location</span>
+          <span class="meta-item__value">Tokyo / Paris / Milan</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Focus</span>
+          <span class="meta-item__value">Textile Engineering & Form</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Exhibition</span>
+          <span class="meta-item__value">Curated Editorial Protocols</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-item__label">Access</span>
+          <span class="meta-item__value">Public Atelier View</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERFECTLY BALANCED EDITORIAL GALLERY WITH LARGE FRAMES & ZERO GAPS -->
+    <section class="studio-gallery-grid" id="studio-gallery">
+      <!-- ROW 1: [Large Span 2] + [Portrait] = 3 Columns -->
+      <div class="studio-card span-2" onclick="openLightbox('src/assets/studio/studio.jpg', 'Studio Main Chamber // Master Weave')">
+        <img src="src/assets/studio/studio.jpg" alt="NOVA Studio" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 01 // Master</span>
+          <h3 class="studio-card__caption">Studio Main Chamber</h3>
+        </div>
+      </div>
+
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (1).jpg', 'Atmospheric Light Chamber')">
+        <img src="src/assets/studio/studio (1).jpg" alt="Studio 01" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 02</span>
+          <h3 class="studio-card__caption">Atmospheric Lighting</h3>
+        </div>
+      </div>
+
+      <!-- ROW 2: [Portrait] + [Large Span 2] = 3 Columns -->
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (2).jpg', 'Tactical Prototype Assembly')">
+        <img src="src/assets/studio/studio (2).jpg" alt="Studio 02" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 03</span>
+          <h3 class="studio-card__caption">Prototype Assembly</h3>
+        </div>
+      </div>
+
+      <div class="studio-card span-2" onclick="openLightbox('src/assets/studio/studio (6).jpg', 'Acoustic Fabric Treatment')">
+        <img src="src/assets/studio/studio (6).jpg" alt="Studio 06" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 04</span>
+          <h3 class="studio-card__caption">Fabric Treatment</h3>
+        </div>
+      </div>
+
+      <!-- ROW 3: [Portrait] + [Portrait] + [Portrait] = 3 Columns -->
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (3).jpg', 'Textile Tension Studies')">
+        <img src="src/assets/studio/studio (3).jpg" alt="Studio 03" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 05</span>
+          <h3 class="studio-card__caption">Textile Tension Studies</h3>
+        </div>
+      </div>
+
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (4).jpg', 'High-Density Membrane Fabrication')">
+        <img src="src/assets/studio/studio (4).jpg" alt="Studio 04" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 06</span>
+          <h3 class="studio-card__caption">Membrane Fabrication</h3>
+        </div>
+      </div>
+
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (5).jpg', 'Structural Silhouette Testing')">
+        <img src="src/assets/studio/studio (5).jpg" alt="Studio 05" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 07</span>
+          <h3 class="studio-card__caption">Silhouette Testing</h3>
+        </div>
+      </div>
+
+      <!-- ROW 4: [Large Span 2] + [Portrait] = 3 Columns -->
+      <div class="studio-card span-2" onclick="openLightbox('src/assets/studio/studio (8).jpg', 'Precision Seam Sealing Lab')">
+        <img src="src/assets/studio/studio (8).jpg" alt="Studio 08" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 08</span>
+          <h3 class="studio-card__caption">Seam Sealing Lab</h3>
+        </div>
+      </div>
+
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (7).jpg', 'Monochromatic Carbon Finishes')">
+        <img src="src/assets/studio/studio (7).jpg" alt="Studio 07" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 09</span>
+          <h3 class="studio-card__caption">Carbon Finishes</h3>
+        </div>
+      </div>
+
+      <!-- ROW 5: [Portrait] + [Large Span 2] = 3 Columns -->
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (9).jpg', 'Geometric Pattern Drafting')">
+        <img src="src/assets/studio/studio (9).jpg" alt="Studio 09" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 10</span>
+          <h3 class="studio-card__caption">Pattern Drafting</h3>
+        </div>
+      </div>
+
+      <div class="studio-card span-2" onclick="openLightbox('src/assets/studio/studio (10).jpg', 'Thermal Dynamics Room')">
+        <img src="src/assets/studio/studio (10).jpg" alt="Studio 10" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 11</span>
+          <h3 class="studio-card__caption">Thermal Dynamics</h3>
+        </div>
+      </div>
+
+      <!-- ROW 6: [Portrait] + [Portrait] + [Portrait] = 3 Columns -->
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (11).jpg', 'Laser-Cut Modular Components')">
+        <img src="src/assets/studio/studio (11).jpg" alt="Studio 11" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 12</span>
+          <h3 class="studio-card__caption">Modular Components</h3>
+        </div>
+      </div>
+
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (12).jpg', 'Drape & Motion Analysis')">
+        <img src="src/assets/studio/studio (12).jpg" alt="Studio 12" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 13</span>
+          <h3 class="studio-card__caption">Drape Analysis</h3>
+        </div>
+      </div>
+
+      <div class="studio-card" onclick="openLightbox('src/assets/studio/studio (14).jpg', 'Hydrophobic Outer Coating')">
+        <img src="src/assets/studio/studio (14).jpg" alt="Studio 14" class="studio-card__img" loading="lazy" />
+        <div class="studio-card__overlay">
+          <span class="studio-card__tag">Protocol 14</span>
+          <h3 class="studio-card__caption">Outer Coating</h3>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- LIGHTBOX MODAL -->
+  <div class="lightbox-modal" id="lightbox-modal" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close image">✕</button>
+    <img src="" alt="NOVA Studio View" class="lightbox-img" id="lightbox-img" onclick="event.stopPropagation()" />
+  </div>
+
+  <!-- UNIVERSAL FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-col__brand">NOVA</div>
+        <p class="footer-col__text">
+          Material research, architectural fabrication, and technical streetwear systems.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="footer-col__heading">Ecosystem</h4>
+        <ul class="footer-links">
+          <li><a href="collection.html" class="footer-link">Collection</a></li>
+          <li><a href="atelier.html" class="footer-link">Atelier</a></li>
+          <li><a href="streetwear.html" class="footer-link">Streetwear</a></li>
+          <li><a href="archives.html" class="footer-link">Archives</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col__heading">Studio</h4>
+        <ul class="footer-links">
+          <li><a href="studio.html" class="footer-link">Laboratories</a></li>
+          <li><a href="archives.html" class="footer-link">Archives</a></li>
+          <li><a href="checkout.html" class="footer-link">Checkout</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col__heading">Dispatch</h4>
+        <p class="footer-col__text">Receive technical drop notifications.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed to Studio Dispatches.');">
+          <input type="email" placeholder="Enter your email" class="newsletter-input" required />
+          <button type="submit" class="btn-primary" style="padding: 0.7rem 1.2rem;">Join</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; 2026 NOVA Studio. All rights reserved.</span>
+      <span>Designed with Pure Minimal Architecture</span>
+    </div>
+  </footer>
+
+  <script src="src/js/cart-state.js"></script>
+  <script>
+    // Lightbox Controller
+    function openLightbox(src, caption) {
+      var modal = document.getElementById('lightbox-modal');
+      var img = document.getElementById('lightbox-img');
+      img.src = src;
+      img.alt = caption;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      var modal = document.getElementById('lightbox-modal');
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Escape Key to Close
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
+</body>
+</html>
