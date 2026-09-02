@@ -37,29 +37,32 @@
     }
 
     /* ==========================================================================
-       PURE AMBIENT GLOW MOUSE TRACKER (PLACED BEHIND INTERFACE SHELL)
+       PURE AMBIENT GLOW MOUSE TRACKER (VIBRANT LUMINOUS AURA)
        ========================================================================== */
     .ambient-mouse-glow {
       position: fixed;
       top: 0;
       left: 0;
-      width: 320px;
-      height: 320px;
-      margin-top: -160px;
-      margin-left: -160px;
+      width: 560px;
+      height: 560px;
+      margin-top: -280px;
+      margin-left: -280px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.3) 0%, rgba(56, 189, 248, 0.12) 40%, rgba(29, 124, 174, 0.02) 65%, transparent 75%);
-      filter: blur(28px);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(56, 189, 248, 0.75) 22%, rgba(0, 240, 255, 0.45) 48%, rgba(16, 84, 121, 0.15) 70%, transparent 82%);
+      filter: blur(34px);
       pointer-events: none;
-      z-index: 1; /* Behind character foreground & UI shell to keep face razor sharp */
+      z-index: 1;
       mix-blend-mode: screen;
       will-change: transform;
-      transform: translate3d(-200px, -200px, 0);
+      transform: translate3d(-300px, -300px, 0);
       transition: opacity 0.3s ease;
+      opacity: 0.95;
     }
 
     html[data-theme="dark"] .ambient-mouse-glow {
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.38) 0%, rgba(57, 255, 20, 0.14) 42%, transparent 75%);
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.95) 0%, rgba(0, 240, 255, 0.7) 25%, rgba(56, 189, 248, 0.4) 52%, rgba(0, 240, 255, 0.12) 72%, transparent 82%);
+      filter: blur(36px);
+      opacity: 1;
     }
 
     /* Z0 — BACKDROP */
