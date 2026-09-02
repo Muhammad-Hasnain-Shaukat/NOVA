@@ -470,7 +470,7 @@ class CartManager {
     };
 
     backdrop.innerHTML = `
-      <aside class="cart-drawer">
+      <aside class="cart-drawer" onclick="event.stopPropagation()">
         <header class="cart-drawer__header">
           <h2 class="cart-drawer__title">Your Bag (<span id="cart-drawer-count">0</span>)</h2>
           <button class="cart-drawer__close-btn" onclick="cartManager.closeDrawer()" aria-label="Close Bag">
@@ -665,9 +665,17 @@ class CartManager {
       <div class="cart-item">
         <img src="${item.image}" alt="${item.name}" class="cart-item__img" />
         <div class="cart-item__details">
-          <div>
-            <h4 class="cart-item__title">${item.name}</h4>
-            <div class="cart-item__meta">Size: ${item.size} &bull; ${item.category}</div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+            <div>
+              <h4 class="cart-item__title">${item.name}</h4>
+              <div class="cart-item__meta">Size: ${item.size} &bull; ${item.category}</div>
+            </div>
+            <button class="cart-remove-btn" onclick="cartManager.removeItem('${item.id}', '${item.size}')" title="Remove item" aria-label="Remove item">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
           </div>
           <div class="cart-item__bottom">
             <span class="cart-item__price">$${(item.price * item.qty).toLocaleString()}</span>
